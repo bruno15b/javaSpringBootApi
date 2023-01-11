@@ -2,11 +2,17 @@ package com.machadob.customers.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +27,15 @@ public class Customer implements Serializable {
 	
 	private String name;
 	private LocalDate birthDate;
+	
+	@ManyToMany
+	@JoinTable(name = "tb_customer_adress", 
+	joinColumns = @JoinColumn(name="customer_id"),
+	inverseJoinColumns= @JoinColumn(name="adress_id"))
+	private Set<Address> address = new HashSet<>();
+	
+	@OneToOne(mappedBy = "customerMainAdress")
+	private Address principalAdress;
 	
 	public Customer() {
 	}
@@ -53,6 +68,18 @@ public class Customer implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Set<Address> getAdress() {
+		return address;
+	}
+
+	public Address getPrincipalAdress() {
+		return principalAdress;
+	}
+
+	public void setPrincipalAdress(Address principalAdress) {
+		this.principalAdress = principalAdress;
 	}
 
 	@Override

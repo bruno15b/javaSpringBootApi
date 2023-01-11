@@ -12,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.machadob.customers.entities.Customer;
 
-
-
 @DataJpaTest
 public class CustomerRepositoryTests {
 
@@ -36,7 +34,6 @@ public class CustomerRepositoryTests {
 		customer2 = new Customer(null, "UsuarioForTest3", LocalDate.parse("2001-02-16"));
 		customer3 = new Customer(null, "UsuarioForTest2", LocalDate.parse("2002-03-17"));
 		repository.saveAll(Arrays.asList(customer1, customer2, customer3));
-		
 	}
 	
 	@Test
@@ -52,7 +49,6 @@ public class CustomerRepositoryTests {
 		Assertions.assertEquals(countTotalCustomers + 1, customer.getId());
 		Assertions.assertTrue(result.isPresent());
 		Assertions.assertSame(result.get(), customer);
-		
 	}
 	
 	@Test
@@ -66,6 +62,4 @@ public class CustomerRepositoryTests {
 		Optional<Customer> result = repository.findById(nonExistingId);
 		Assertions.assertTrue(result.isEmpty());
 	}
-	
-
 }
