@@ -14,20 +14,20 @@ public class CustomerService {
 	@Autowired
 	private CustomerRepository repository;
 
-	public List<Customer> findAll() {
+	public List<Customer> findAllCustomers() {
 		return repository.findAll();
 	}
 
-	public Customer findById(Long id) {
+	public Customer findCustomerById(Long id) {
 		Optional<Customer> customerObj = repository.findById(id);
 		return customerObj.get();
 	}
 
-	public Customer insert(Customer customerObj) {
+	public Customer insertCustomer(Customer customerObj) {
 		return repository.save(customerObj);
 	}
 
-	public Customer update(Long id, Customer newCustomerObjWithUpdates) {
+	public Customer updateCustomer(Long id, Customer newCustomerObjWithUpdates) {
 		Customer customerObjFromDatabase = repository.getReferenceById(id);
 		updateDataCustomerFromDb(customerObjFromDatabase ,newCustomerObjWithUpdates);
 		return repository.save(customerObjFromDatabase);
@@ -37,5 +37,4 @@ public class CustomerService {
 		OldCustomerObjFromDatabase.setName(newCustomerObjWithUpdates.getName());
 		OldCustomerObjFromDatabase.setBirthDate(newCustomerObjWithUpdates.getBirthDate());
 	}
-
 }

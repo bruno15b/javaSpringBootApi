@@ -26,19 +26,19 @@ public class CustomerResources {
 
 	@GetMapping
 	public ResponseEntity<List<Customer>> findAll() {
-		List<Customer> listOfObjsCustomer = service.findAll();
+		List<Customer> listOfObjsCustomer = service.findAllCustomers();
 		return ResponseEntity.ok().body(listOfObjsCustomer);
 	}
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Customer> findById(@PathVariable Long id) {
-		Customer objCustomer = service.findById(id);
+		Customer objCustomer = service.findCustomerById(id);
 		return ResponseEntity.ok().body(objCustomer);
 	}
 
 	@PostMapping
 	public ResponseEntity<Customer> insert(@RequestBody Customer objCustomer) {
-		objCustomer = service.insert(objCustomer);
+		objCustomer = service.insertCustomer(objCustomer);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id)").buildAndExpand(objCustomer.getId())
 				.toUri();
 		return ResponseEntity.created(uri).body(objCustomer);
@@ -46,7 +46,7 @@ public class CustomerResources {
 
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody Customer objCustomer) {
-		objCustomer = service.update(id, objCustomer);
+		objCustomer = service.updateCustomer(id, objCustomer);
 		return ResponseEntity.ok().body(objCustomer);
 	}
 }
