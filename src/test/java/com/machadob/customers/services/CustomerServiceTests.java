@@ -28,17 +28,14 @@ public class CustomerServiceTests {
 	
 	Customer customer1, customer2, customer3;
 	private long existingId;
-	private long nonExistingId;
-	private long countTotalCustomers;
+
 	final List<Customer> customers = new ArrayList<>();
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		
-		countTotalCustomers = 6L;
+	
 		existingId = 1L;
-		nonExistingId = 999999L;
-
+	
 		customer1 = new Customer(1L, "UsuarioForTest1", LocalDate.parse("2000-01-15"));
 		customer2 = new Customer(2L, "UsuarioForTest3", LocalDate.parse("2001-02-16"));
 		customer3 = new Customer(3L, "UsuarioForTest2", LocalDate.parse("2002-03-17"));
@@ -66,7 +63,4 @@ public class CustomerServiceTests {
 		Assertions.assertEquals(result, customer1);
 		Mockito.verify(repository).findById(existingId);
 	}
-	
-
-	
 }

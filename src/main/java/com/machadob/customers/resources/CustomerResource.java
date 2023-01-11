@@ -19,7 +19,7 @@ import com.machadob.customers.services.CustomerService;
 
 @RestController
 @RequestMapping(value = "/customers")
-public class CustomerResources {
+public class CustomerResource {
 
 	@Autowired
 	private CustomerService service;
