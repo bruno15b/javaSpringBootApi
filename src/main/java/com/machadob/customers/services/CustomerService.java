@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.machadob.customers.entities.Customer;
 import com.machadob.customers.repositories.CustomerRepository;
+import com.machadob.customers.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class CustomerService {
@@ -20,7 +23,7 @@ public class CustomerService {
 
 	public Customer findCustomerById(Long id) {
 		Optional<Customer> customerObj = repository.findById(id);
-		return customerObj.get();
+		return customerObj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public Customer insertCustomer(Customer customerObj) {
@@ -28,9 +31,13 @@ public class CustomerService {
 	}
 
 	public Customer updateCustomer(Long id, Customer newCustomerObjWithUpdates) {
-		Customer customerObjFromDatabase = repository.getReferenceById(id);
-		updateDataCustomerFromDb(customerObjFromDatabase ,newCustomerObjWithUpdates);
-		return repository.save(customerObjFromDatabase);
+		try {
+			Customer customerObjFromDatabase = repository.getReferenceById(id);
+			updateDataCustomerFromDb(customerObjFromDatabase, newCustomerObjWithUpdates);
+			return repository.save(customerObjFromDatabase);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateDataCustomerFromDb(Customer OldCustomerObjFromDatabase, Customer newCustomerObjWithUpdates) {
