@@ -14,32 +14,32 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-
 @Entity
-@Table(name="tb_address")
+@Table(name = "tb_address")
 public class Address implements Serializable {
 
-	private static final long serialVersionUID = 1L; 
-	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String streetOrAvenueName;
 	private Integer addressNumber;
-	private String zipCode;	
+	private String zipCode;
 	private String cityName;
-	
+
 	@JsonIgnore
 	@ManyToMany(mappedBy = "addresses")
 	private Set<Customer> customer = new HashSet<>();
-	
-	@OneToOne
+
+	@JsonIgnore
+	@OneToOne(mappedBy = "principalAddress")
 	private Customer customerMainAddress;
-	
+
 	public Address() {
 	}
-	
+
 	public Address(Long id, String streetOrAvenueName, Integer addressNumber, String zipCode, String cityName) {
 		this.id = id;
 		this.streetOrAvenueName = streetOrAvenueName;
@@ -87,16 +87,16 @@ public class Address implements Serializable {
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
-	
+
 	public Set<Customer> getCustomer() {
 		return customer;
 	}
-	
+
 	public Customer getCustomerMainAddress() {
 		return customerMainAddress;
 	}
 
-	public void setCustomerMainAddress( Customer customerMainAddress) {
+	public void setCustomerMainAddress(Customer customerMainAddress) {
 		this.customerMainAddress = customerMainAddress;
 	}
 

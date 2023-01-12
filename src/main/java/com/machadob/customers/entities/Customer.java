@@ -29,13 +29,13 @@ public class Customer implements Serializable {
 	private LocalDate birthDate;
 	
 	@ManyToMany
-	@JoinTable(name = "tb_customer_adress", 
+	@JoinTable(name = "tb_customer_address", 
 	joinColumns = @JoinColumn(name="customer_id"),
-	inverseJoinColumns= @JoinColumn(name="adress_id"))
-	private Set<Address> address = new HashSet<>();
+	inverseJoinColumns= @JoinColumn(name="address_id"))
+	private Set<Address> addresses = new HashSet<>();
 	
-	@OneToOne(mappedBy = "customerMainAdress")
-	private Address principalAdress;
+	@OneToOne
+	private Address principalAddress;
 	
 	public Customer() {
 	}
@@ -70,16 +70,16 @@ public class Customer implements Serializable {
 		this.id = id;
 	}
 	
-	public Set<Address> getAdress() {
-		return address;
+	public Set<Address> getAddresses() {
+		return addresses;
 	}
 
-	public Address getPrincipalAdress() {
-		return principalAdress;
+	public Address getPrincipalAddress() {
+		return principalAddress;
 	}
 
-	public void setPrincipalAdress(Address principalAdress) {
-		this.principalAdress = principalAdress;
+	public void setPrincipalAdress(Address principalAddress) {
+		this.principalAddress = principalAddress;
 	}
 
 	@Override

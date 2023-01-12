@@ -23,6 +23,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.machadob.customers.entities.Customer;
+import com.machadob.customers.repositories.CustomerRepository;
+import com.machadob.customers.services.AddressService;
 import com.machadob.customers.services.CustomerService;
 import com.machadob.customers.services.exceptions.ResourceNotFoundException;
 
@@ -37,6 +39,12 @@ public class CustomerResourceTest {
 
 	@MockBean
 	private CustomerService service;
+	
+	@MockBean
+	private AddressService serviceAddress;
+	
+	@MockBean
+	private CustomerRepository customerRepository;
 
 	Customer customer1, customer2, customer3;
 	private long existingId;

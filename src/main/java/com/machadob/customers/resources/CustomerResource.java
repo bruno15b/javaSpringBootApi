@@ -1,6 +1,7 @@
 package com.machadob.customers.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,39 +47,41 @@ public class CustomerResource {
 	}
 	
 	@GetMapping(value = "/{id}/all_addresses")
-	public ResponseEntity<Customer> findAllAdressCustomer(@PathVariable Long id) {
+	public ResponseEntity<List<Address>>  findAllAdressCustomer(@PathVariable Long id) {
 		Customer objCustomer = service.findCustomerById(id);
-		return ResponseEntity.ok().body(objCustomer);
+		List<Address> list = new ArrayList<>();
+		list.addAll(objCustomer.getAddresses());
+		return ResponseEntity.ok().body(list);
 	}
 
 	@PostMapping
-	public ResponseEntity<Customer> insert(@RequestBody Customer objCustomer) {
+	public ResponseEntity<Customer> insertCustomer(@RequestBody Customer objCustomer) {
 		objCustomer = service.insertCustomer(objCustomer);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id)").buildAndExpand(objCustomer.getId())
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objCustomer.getId())
 				.toUri();
 		return ResponseEntity.created(uri).body(objCustomer);
 	}
 	
 	@PostMapping(value = "/{id}/add_address")
-	public ResponseEntity<Address> createAdressAndCombineWithCustomer(@PathVariable Long id,@RequestBody Address objAdress) {
-		objAdress = serviceAddress.insertAddress(objAdress);
-		 URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id)").buildAndExpand(objAdress.getId())
-					.toUri();
-		 service.findCustomerById(id).getAdress().add(objAdress);
+	public ResponseEntity<Address> createAdressForCustomer(@PathVariable Long id,@RequestBody Address objAddress) {
+		objAddress = serviceAddress.insertAddress(objAddress);
+		 URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objAddress.getId()).toUri();
+		 service.findCustomerById(id).getAddresses().add(objAddress);
 		 customerRepository.save(service.findCustomerById(id));
-		return ResponseEntity.created(uri).body(objAdress);
+		return ResponseEntity.created(uri).body(objAddress);
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody Customer objCustomer) {
+	public ResponseEntity<Customer> updateCustomerInformations(@PathVariable Long id, @RequestBody Customer objCustomer) {
 		objCustomer = service.updateCustomer(id, objCustomer);
 		return ResponseEntity.ok().body(objCustomer);
 	}
 	
 	@PutMapping(value = "/{id}/{adressId}")
-	public ResponseEntity<Customer> combineCustomerWithAdress(@PathVariable Long id, @PathVariable Long adressId) {
-		 service.findCustomerById(id).setPrincipalAdress(serviceAddress.findAddressById(adressId));	 
-		 customerRepository.save(service.findCustomerById(id));
+	public ResponseEntity<Customer> assignMainAddress(@PathVariable Long id, @PathVariable Long adressId) {
+		service.findCustomerById(id).setPrincipalAdress(serviceAddress.findAddressById(adressId));
+		service.findCustomerById(id).getAddresses().add(serviceAddress.findAddressById(adressId));
+		customerRepository.save(service.findCustomerById(id));
 		return ResponseEntity.ok().body(service.findCustomerById(id));
 	}
 }

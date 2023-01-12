@@ -42,14 +42,19 @@ public class DevConfigSeedingDatabase implements CommandLineRunner {
 		
 		addressRepository.saveAll(Arrays.asList(ad1,ad2,ad3,ad4,ad5,ad6));
 		
-		c1.getAdress().add(ad6);
-		c1.getAdress().add(ad4);
-		c1.getAdress().add(ad2);
-		c2.getAdress().add(ad1);
-		c3.getAdress().add(ad3);
-		c4.getAdress().add(ad6);
-		c4.getAdress().add(ad2);
-		c4.getAdress().add(ad5);
+		c1.getAddresses().add(ad6);
+		c1.getAddresses().add(ad4);
+		c1.getAddresses().add(ad2);
+		c2.getAddresses().add(ad1);
+		c3.getAddresses().add(ad3);
+		c4.getAddresses().add(ad6);
+		c4.getAddresses().add(ad2);
+		c4.getAddresses().add(ad5);
+		
+		c1.setPrincipalAdress(ad6);
+		c2.setPrincipalAdress(ad1);
+		c3.setPrincipalAdress(ad3);
+		c4.setPrincipalAdress(ad6);
 		
 		customerRepository.saveAll(Arrays.asList(c1,c2,c3,c4));
 	}
