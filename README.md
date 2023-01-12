@@ -22,7 +22,7 @@ GET -> http://apicustomer-env.eba-3yipt6mj.sa-east-1.elasticbeanstalk.com/custom
 
 •	Criar endereço para pessoa
 POST ->http://apicustomer-env.eba-3yipt6mj.sa-east-1.elasticbeanstalk.com/customers/id/add_address
-                                                                      (id da pessoa)^
+                                                                      
 {
 "streetOrAvenueName": "rua ou avenida",
 "addressNumber": 30, <- numero inteiro
@@ -32,7 +32,7 @@ POST ->http://apicustomer-env.eba-3yipt6mj.sa-east-1.elasticbeanstalk.com/custom
 
 •	Listar endereços da pessoa
 GET -> http://apicustomer-env.eba-3yipt6mj.sa-east-1.elasticbeanstalk.com/customers/id/all_addresses
-                                                                     (id da pessoa) ^
+                                                                    
 •	Poder informar qual endereço é o principal da pessoa  
 PUT-> http://apicustomer-env.eba-3yipt6mj.sa-east-1.elasticbeanstalk.com/customers/id/id <- (id do endereço)
-                                                                    (id da pessoa) ^
+                                                                  
