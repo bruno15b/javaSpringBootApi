@@ -68,6 +68,7 @@ public class CustomerResource {
 		 URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objAddress.getId()).toUri();
 		 service.findCustomerById(id).getAddresses().add(objAddress);
 		 customerRepository.save(service.findCustomerById(id));
+		 assignMainAddress(id, objAddress.getId());
 		return ResponseEntity.created(uri).body(objAddress);
 	}
 

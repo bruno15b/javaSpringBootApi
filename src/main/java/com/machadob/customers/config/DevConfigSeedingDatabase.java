@@ -22,7 +22,7 @@ public class DevConfigSeedingDatabase implements CommandLineRunner {
 	
 	@Autowired
 	private AddressRepository addressRepository;
-
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -57,6 +57,7 @@ public class DevConfigSeedingDatabase implements CommandLineRunner {
 		c4.setPrincipalAdress(ad6);
 		
 		customerRepository.saveAll(Arrays.asList(c1,c2,c3,c4));
+		
 	}
 	
 
